@@ -1,0 +1,25 @@
+body{
+    text-align: center;
+}
+
+#jeu{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 600px;
+    margin: auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.case{
+    border: 1px solid white;
+    height: 200px;
+    line-height: 200px;
+    font-size: 120px;
+}
+
+.button{
+    padding-top: 50px;
+}
+
+
