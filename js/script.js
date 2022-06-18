@@ -1,10 +1,10 @@
-// On charge les informations utiles
+// We load the useful information
 const statut = document.querySelector("h2")
 let jeuActif = true
 let joueurActif = "X"
 let etatJeu = ["", "", "", "", "", "", "", "", ""]
 
-// On définit les conditions de victoire
+// The conditions for victory are defined
 const conditionsVictoire = [
     [0, 1, 2],
     [3, 4, 5],
@@ -21,80 +21,80 @@ const gagne = () => `Player ${joueurActif} has won`
 const egalite = () => "Draw"
 const tourJoueur = () => `Player ${joueurActif} you're up`
 
-// On affiche quel joueur commence
+// Show which player starts
 statut.innerHTML = tourJoueur()
 
-// On met en place les écouteurs d'évènements
+// We set up the event listeners
 document.querySelectorAll(".case").forEach(cell => cell.addEventListener("click", gestionClicCase))
 document.querySelector("#retry").addEventListener("click", retry)
 
 /**
- * Cette fonction gère le clic sur les cases du jeu
+ * This function manages the click on the game boxes
  */
 function gestionClicCase(){
-    // On récupère l'index de la case cliquée
+    // The index of the clicked box is retrieved
     const indexCase = parseInt(this.dataset.index)
     
-    // On vérifie si la case est déjà remplie ou le jeu terminé
+    // Check if the box is already filled or the game completed
     if(etatJeu[indexCase] !== "" || !jeuActif){
         return
     }
 
-    // On écrit le symbole du joueur dans le tableau etatJeu et la case
+    // We write the symbol of the player in the table etatJeu and the box
     etatJeu[indexCase] = joueurActif
     this.innerHTML = joueurActif
 
-    // On vérifie si le joueur a gagné
+    // Check if the player has won
     verifGagne()
 }
 
 /**
- * Cette fonction vérifie si le joueur a gagné
+ * This function checks if the player has won
  */
 function verifGagne(){
     let tourGagnant = false
 
-    // On parcourt toutes les conditions de victoire
+    // We’re going through all the winning conditions
     for(let conditionVictoire of conditionsVictoire){
-        // On récupère les 3 cases de la condition de victoire
+        // We get the 3 boxes of the winning condition
         let val1 = etatJeu[conditionVictoire[0]]
         let val2 = etatJeu[conditionVictoire[1]]
         let val3 = etatJeu[conditionVictoire[2]]
 
-        // Si l'une des cases est vide
+        // If one of the boxes is empty
         if(val1 === "" || val2 === "" || val3 === ""){
             continue
         }
 
-        // Si les 3 cases sont identiques
+        // If the 3 boxes are the same
         if(val1 === val2 && val2 === val3){
-            // On gagne
+            // we win
             tourGagnant = true
             break
         }
     }
 
-    // Si on a gagné
+    // if we won
     if(tourGagnant){
         statut.innerHTML = gagne()
         jeuActif = false
         return
     }
 
-    // Si toutes les cases sont remplies
+    // If all boxes are completed
     if(!etatJeu.includes("")){
         statut.innerHTML = egalite()
         jeuActif = false
         return
     }
 
-    // On change de joueur
+    // We change players
     joueurActif = joueurActif === "X" ? "O" : "X"
     statut.innerHTML = tourJoueur()
 }
 
 /**
- * Cette fonction réinitialise le jeu
+ * This function reset the game
  */
 function retry(){
     joueurActif = "X"
